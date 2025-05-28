@@ -1,5 +1,7 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { customSession } from "better-auth/plugins/custom-session";
+import { eq } from "drizzle-orm";
 
 import { db } from "@/db";
 import * as schema from "@/db/schema";
@@ -11,11 +13,33 @@ export const auth = betterAuth({
     schema: schema,
   }),
   socialProviders: {
-    google: { 
-        clientId: process.env.GOOGLE_CLIENT_ID as string, 
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET as string, 
-    }, 
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
   },
+  plugins: [
+    customSession(async ({ user, session }) => {
+      const clinics = await db.query.usersToClinicsTable.findMany({
+        where: eq(schema.usersToClinicsTable.userId, user.id),
+        with: {
+          clinic: true,
+        },
+      });
+      // Ao adaptar para o usuario ter multiplas clínicas, mudar esse código para lidar com múltiplas clínicas.
+      const clinic = clinics[0];
+      return {
+        user: {
+          ...user,
+          clinic: {
+            id: clinic.clinic.id,
+            name: clinic.clinic.name,
+          },
+        },
+        session,
+      };
+    }),
+  ],
   user: {
     modelName: "usersTable",
   },
