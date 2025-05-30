@@ -32,13 +32,16 @@ const formSchema = z.object({
 });
 
 interface UpsertDoctorFormProps {
-    onSuccess: () => void;
+    onSuccess?: () => void;
 }
 
 const UpsertDoctorForm = ({ onSuccess }: UpsertDoctorFormProps) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            name: "",
+            specialty: "",
+            appointmentPrice: 0,
             availableFromWeekDay: "1",
             availableToWeekDay: "5",
             availableFromTime: "",
