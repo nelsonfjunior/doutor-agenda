@@ -44,7 +44,7 @@ const UpsertDoctorForm = ({ onSuccess, doctor }: UpsertDoctorFormProps) => {
         defaultValues: {
             name: doctor?.name ?? "",
             specialty: doctor?.specialty ?? "",
-            appointmentPrice: doctor?.appointmentPriceInCents ? doctor.appointmentPriceInCents / 100 : 0, 
+            appointmentPrice: doctor?.appointmentPriceInCents ? doctor.appointmentPriceInCents / 100 : 0,
             availableFromWeekDay: doctor?.availableFromWeekDay?.toString() ?? "1",
             availableToWeekDay: doctor?.availableToWeekDay?.toString() ?? "5",
             availableFromTime: doctor?.availableFromTime ?? "",
@@ -65,7 +65,7 @@ const UpsertDoctorForm = ({ onSuccess, doctor }: UpsertDoctorFormProps) => {
     const onsubmit = async (values: z.infer<typeof formSchema>) => {
         upsertDoctorAction.execute({
             ...values,
-            id: doctor?.id, 
+            id: doctor?.id,
             availableFromWeekDay: parseInt(values.availableFromWeekDay, 10),
             availableToWeekDay: parseInt(values.availableToWeekDay, 10),
             appointmentPriceInCents: values.appointmentPrice * 100, // Convert to cents
@@ -75,7 +75,7 @@ const UpsertDoctorForm = ({ onSuccess, doctor }: UpsertDoctorFormProps) => {
     return (
         <DialogContent>
             <DialogHeader>
-                <DialogTitle>{doctor ? doctor.name : "Adicionar médico" }</DialogTitle>
+                <DialogTitle>{doctor ? doctor.name : "Adicionar médico"}</DialogTitle>
                 <DialogDescription>{doctor ? "Edite as informações desse médico" : "Adicione um novo médico"}</DialogDescription>
             </DialogHeader>
             <Form{...form}>
