@@ -14,7 +14,7 @@ export const PageTitle = ({ children }: { children: React.ReactNode }) => {
     return <h1 className="text-2xl font-bold">{children}</h1>
 }
 
-export const PageHeaderDescription = ({ children }: { children: React.ReactNode }) => {
+export const PageDescription = ({ children }: { children: React.ReactNode }) => {
     return <p className="text-sm text-muted-foreground">{children}</p>
 }
 

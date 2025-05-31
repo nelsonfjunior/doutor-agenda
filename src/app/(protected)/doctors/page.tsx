@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { PageActions, PageContainer, PageContent, PageHeader, PageHeaderContent, PageHeaderDescription, PageTitle } from "@/components/ui/page-container";
+import { PageActions, PageContainer, PageContent, PageDescription, PageHeader, PageHeaderContent, PageTitle } from "@/components/ui/page-container";
 import { db } from "@/db";
 import { doctorsTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
@@ -28,9 +28,9 @@ const DoctorsPage = async () => {
             <PageHeader>
                 <PageHeaderContent>
                     <PageTitle>Médicos</PageTitle>
-                    <PageHeaderDescription>
+                    <PageDescription>
                         Gerencie os médicos da sua clínica
-                    </PageHeaderDescription>
+                    </PageDescription>
                 </PageHeaderContent>
                 <PageActions>
                     <AddDoctorButton />
@@ -40,7 +40,7 @@ const DoctorsPage = async () => {
                 <div className="grid grid-cols-3 gap-6">
                     {doctors.map(doctor => <DoctorCard key={doctor.id} doctor={doctor} />)}
                 </div>
-                
+
             </PageContent>
         </PageContainer>
     );
