@@ -46,7 +46,7 @@ const formSchema = z.object({
         message: "Número de telefone é obrigatório.",
     }),
     sex: z.enum(["male", "female"], {
-        required_error: "Sexo é obrigatório.",
+        message: "Sexo é obrigatório.",
     }),
 });
 
