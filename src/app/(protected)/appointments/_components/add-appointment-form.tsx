@@ -100,7 +100,8 @@ const AddAppointmentForm = ({
     queryFn: () => getAvailableTimes({
       date: dayjs(selectedDate).format("YYYY-MM-DD"),
       doctorId: selectedDoctorId,
-    })
+    }),
+    enabled: !!selectedDate && !!selectedDoctorId,
   })
 
   // Atualizar o preço quando o médico for selecionado
@@ -148,7 +149,7 @@ const AddAppointmentForm = ({
   };
 
   const isDateAvailable = (date: Date) => {
-    if (!selectedDoctorId || !availableTimes) return false;
+    if (!selectedDoctorId) return false;
     const selectedDoctor = doctors.find(
       (doctor) => doctor.id === selectedDoctorId,
     );
