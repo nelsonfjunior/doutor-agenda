@@ -12,7 +12,7 @@ interface Params {
       clinic: {
         id: string;
       };
-    };
+    }; 
   };
 }
 
