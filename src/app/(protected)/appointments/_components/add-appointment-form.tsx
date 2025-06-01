@@ -303,9 +303,10 @@ const AddAppointmentForm = ({
                     {availableTimes?.data?.map((time) => (
                       <SelectItem
                         key={time.value}
-                        value={time.value}
+                        value={time.value} 
+                        disabled={!time.available}
                       >
-                        {time.label}
+                        {time.label} {!time.available && "(Indisponível)"}
                       </SelectItem>
                     ))}
                   </SelectContent>
