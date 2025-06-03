@@ -1,6 +1,6 @@
 "use client";
 
-import { addMonths, format } from "date-fns";
+import { addMonths, format, startOfDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { parseAsIsoDate, useQueryState } from "nuqs";
@@ -20,12 +20,12 @@ export function DatePicker({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
   const [from, setFrom] = useQueryState(
-    "from",
-    parseAsIsoDate.withDefault(new Date()),
+  "from",
+  parseAsIsoDate.withDefault(startOfDay(new Date())),
   );
   const [to, setTo] = useQueryState(
     "to",
-    parseAsIsoDate.withDefault(addMonths(new Date(), 1)),
+    parseAsIsoDate.withDefault(startOfDay(addMonths(new Date(), 1))),
   );
   const handleDateSelect = (dateRange: DateRange | undefined) => {
     if (dateRange?.from) {
