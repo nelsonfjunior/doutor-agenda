@@ -1,9 +1,9 @@
 "use client";
 
-import { addMonths, format, startOfDay } from "date-fns";
+import { format, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
-import { parseAsIsoDate, useQueryState } from "nuqs";
+import { useQueryState } from "nuqs";
 import * as React from "react";
 import { DateRange } from "react-day-picker";
 
@@ -16,32 +16,29 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
+
+
 export function DatePicker({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
-  const [from, setFrom] = useQueryState(
-  "from",
-  parseAsIsoDate.withDefault(startOfDay(new Date())),
-  );
-  const [to, setTo] = useQueryState(
-    "to",
-    parseAsIsoDate.withDefault(startOfDay(addMonths(new Date(), 1))),
-  );
-  const handleDateSelect = (dateRange: DateRange | undefined) => {
-    if (dateRange?.from) {
-      setFrom(dateRange.from, {
-        shallow: false,
-      });
+  const [from, setFrom] = useQueryState("from");
+  const [to, setTo] = useQueryState("to");
+
+  const fromDate = from ? parse(from, "yyyy-MM-dd", new Date()) : undefined;
+  const toDate = to ? parse(to, "yyyy-MM-dd", new Date()) : undefined;
+
+  const handleDateSelect = (range: DateRange | undefined) => {
+    if (range?.from) {
+      setFrom(format(range.from, "yyyy-MM-dd"));
     }
-    if (dateRange?.to) {
-      setTo(dateRange.to, {
-        shallow: false,
-      });
+    if (range?.to) {
+      setTo(format(range.to, "yyyy-MM-dd"));
     }
   };
+
   const date = {
-    from,
-    to,
+    from: fromDate,
+    to: toDate,
   };
   return (
     <div className={cn("grid gap-2", className)}>
@@ -84,7 +81,7 @@ export function DatePicker({
             onSelect={handleDateSelect}
             numberOfMonths={2}
             locale={ptBR}
-            />
+          />
         </PopoverContent>
       </Popover>
     </div>
